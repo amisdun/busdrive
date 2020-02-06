@@ -21,7 +21,7 @@ let create_available_busses = async (req,res,next) => {
 
             res.status(201).json({res: "created", msg: "Bus added successfully"})
         }
-    } catch (error) {
+    } catch (error) {   
         console.log(error)
     }
 }
