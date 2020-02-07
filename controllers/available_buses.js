@@ -21,7 +21,8 @@ let create_available_busses = async (req,res,next) => {
 
             res.status(201).json({res: "created", msg: "Bus added successfully"})
         }
-    } catch (error) {   
+    } catch (error) {
+        res.status(500).json({res: "error", msg: "An error has occured"})   
         console.log(error)
     }
 }
@@ -39,6 +40,7 @@ let edit_available_busses = async (req,res,next) => {
         await available_bus.findByIdAndUpdate({id: req.params.id},update_bus).exec()
         res.json({res: "updated", msg: "update successfully"})
     } catch (error) {
+        res.status(500).json({res: "error", msg: "An error has occured"})
         console.log(error)
     }
 }
@@ -59,6 +61,7 @@ let find_single_bus = async (req,res,next) => {
         if(single_bus){res.json({res: "found", data: single_bus})}
         else{res.json({res: "Not found"})}
     } catch (error) {
+        res.status(500).json({res: "error", msg: "An error has occured"})
         console.log(error)
     }
 }
@@ -68,6 +71,7 @@ let delete_bus = async (req,res,next) => {
         await available_bus.findByIdAndDelete({id: req.params.id}).exec()
         res.json({res: "deleted", msg: "deleted successfully"})
     } catch (error) {
+        res.status(500).json({res: "error", msg: "An error has occured"})
         console.log(error)
     }
 }
@@ -85,6 +89,7 @@ let find_by_initials = async (req,res,next) => {
         if(result.length >= 1){res.json({res: "found", data: result})}
         else{res.json({res: "not found", msg: "No bus is available at the moment"})}
     } catch (error) {
+        res.status(500).json({res: "error", msg: "An error has occured"})
         console.log(error)
     }
 }
