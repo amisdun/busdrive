@@ -4,11 +4,11 @@ const jwt = require("jsonwebtoken")
 const bodyParser = require("body-parser")
 const cors = require("cors")
 const path = require("path")
-
+require("dotenv").config({path:__dirname + '/config.env'})
 let app = express()
 
 // using cors
-app.user(cors())
+app.use(cors())
 
 //initializing body parser
 app.use(bodyParser.urlencoded({extended: false}))
@@ -24,7 +24,7 @@ app.use(bodyParser.json())
 //registring router here
 
 // initializing the port 
-let port = 400 || process.env.PORT
+let port = 4000 || process.env.PORT
 
 //serving the homepage
 app.get("/",(req,res) => {

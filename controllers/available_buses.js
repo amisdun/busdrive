@@ -2,7 +2,7 @@ const mongoose = require("mongoose")
 mongoose.Promise = global.Promise
 const db = require("../db_connection/mongoose_db")
 const available_bus = require("../model/busses")
-require("../index")
+require("../index").default
 
 let create_available_busses = async (req,res,next) => {
     try {
@@ -79,20 +79,20 @@ let delete_bus = async (req,res,next) => {
 let find_by_initials = async (req,res,next) => {
     try {
         let data = {
-            route: req.body.route,
-            travelling_date: req.body.travelling_date,
-            travelling_session:  req.body.travelling_session
+            route: req.body.route
         }
 
-        let result = await available_bus.find(data).exec()
+        let result = await available_bus.find(data,
+            {"$and": [{travelling_date: req.body.travelling_date},{travelling_session:req.body.req.body.travelling_session},{seat_capacity: {"$gt": 0}}]}).exec()
 
-        if(result.length >= 1){res.json({res: "found", data: result})}
+        if(result.length >= 1){res.json({res: "found", data: result[0]})}
         else{res.json({res: "not found", msg: "No bus is available at the moment"})}
     } catch (error) {
         res.status(500).json({res: "error", msg: "An error has occured"})
         console.log(error)
     }
 }
+
 
 
 module.exports = {
