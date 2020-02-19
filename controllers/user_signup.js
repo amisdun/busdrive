@@ -18,7 +18,8 @@ let users = async (req,res,next) => {
                 username: req.body.username,
                 password: hash,
                 date_of_birth: req.body.date_of_birth,
-                email: req.body.email
+                email: req.body.email,
+                user_account_balance: 0.0
             }).save()
 
             res.status(201).json({res: "created",msg: "User account created succesfully"})

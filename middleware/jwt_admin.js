@@ -1,5 +1,5 @@
 const jwt = require("jsonwebtoken");
-require("../../index")
+require("../index")
 
 var authenticate = (req,res,next) =>{
     jwt.verify(req.body.token,process.env['ADMIN_KEY'],(err,decode)=>{

@@ -26,8 +26,12 @@ let user_signup = mongoose.Schema({
         type: String,
         required: true
     },
+    user_account_balance: {
+        type: mongoose.Types.Decimal128,
+        required: false
+    },
     booking_details: [
-        {   _id: mongoose.Schema.Types.ObjectId,
+        {  
             booking_id: {
                 type: String,
                 required: false
@@ -45,10 +49,6 @@ let user_signup = mongoose.Schema({
                 required: false
             },
             booking_date: {
-                type: Date,
-                required: false
-            },
-            payment_type: {
                 type: String,
                 required: false
             },

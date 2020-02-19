@@ -13,7 +13,7 @@ let user_signin = async (req,res,next) => {
             let verify = password_hash.verify(req.body.password,user_account.password)
 
             if(verify === true){
-               let token = jwt.sign({user_id: user_account._id},process.env['USER_KEY'], {expiresIn: "24h"})
+               let token = jwt.sign({user_id: user_account._id,email: req.body.email},process.env['USER_KEY'], {expiresIn: "24h"})
                 res.json({res: "Auth success", token: token})
             }
             else{
