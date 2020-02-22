@@ -2,10 +2,6 @@ const mongoose = require("mongoose")
 
 let user_signup = mongoose.Schema({
     _id: mongoose.Schema.Types.ObjectId,
-    date_of_birth: {
-        type: Date,
-        required: true
-    },
     first_name: {
         type: String,
         required: true

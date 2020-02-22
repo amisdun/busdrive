@@ -50,8 +50,9 @@ let paypal_payment = async (req,res,next) => {
         for(let i = 0; i <  create_payment.links.length; i++){
             if(create_payment.links[i].rel === "approval_url"){
                 created_payment_link = create_payment.links[i].href
+
+                return created_payment_link
             }
-            return created_payment_link
         }
         res.json({res: "approval_url", data: created_payment_link})
     }
@@ -72,8 +73,9 @@ let paypal_verification_success = async (req,res,next) => {
     try {
         let execute_payment = await paypal.payment.execute(payment_id,execute_payment_json)
         if(execute_payment){
-            let update_user_account = await user.findByIdAndUpdate(user_id, {user_account_balance: amount}).exec()
-            res.redirect(path.join(__dirname + "/"))
+            await user.findByIdAndUpdate(user_id, {user_account_balance: amount}).exec()
+            res.json({res: "success", msg: "Thanks for using paypal"})
+            //res.redirect(path.join(__dirname + "/"))
                 
         } 
     } catch (error) {

@@ -8,7 +8,7 @@ require("../index")
 let users = async (req,res,next) => {
     try {
         let user = await user_account.findOne({email: req.body.email}).exec()
-        if(user || user.username == req.body.username){res.json({res: "exist",msg: "User already exist"})}
+        if(user){res.json({res: "exist",msg: "User already exist"})}
         else{
             let hash = password_hash.generate(req.body.password)
             await new user_account({
@@ -17,7 +17,6 @@ let users = async (req,res,next) => {
                 last_name: req.body.last_name,
                 username: req.body.username,
                 password: hash,
-                date_of_birth: req.body.date_of_birth,
                 email: req.body.email,
                 user_account_balance: 0.0
             }).save()

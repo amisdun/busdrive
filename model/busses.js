@@ -19,11 +19,11 @@ let available_busses = mongoose.Schema({
         required: true
     },
     travelling_date: {
-        type: Date,
+        type: String,
         required: true
     },
     fare: {
-        type: String,
+        type: mongoose.Types.Decimal128,
         required: true
     }
 })

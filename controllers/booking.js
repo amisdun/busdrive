@@ -7,9 +7,7 @@ const uniqid = require("uniqid")
 require("../index")
 
 let booking = async (req,res,next) => {
-    try {
-        //generate random booking ID here
-        let booking_id = uniqid() 
+    try { 
 
         let bus_id = req.params.bus_id
         let user_id = req.user.user_id
@@ -21,6 +19,8 @@ let booking = async (req,res,next) => {
         if(bus.seat_capacity >= 1){
             let user_booking = await user.findById(user_id).exec()
             if(user_booking.user_account_balance >= bus.fare){
+                //generate random booking ID here
+                let booking_id = uniqid()
                 let new_account_balance = user_booking.user_account_balance - bus.fare
                 await user.findByIdAndUpdate(user_id,{user_account_balance: new_account_balance}).exec()
                 await user.findByIdAndUpdate(user_id,{"$push": {
@@ -36,10 +36,10 @@ let booking = async (req,res,next) => {
                 }}).exec()
                 let new_seat = bus.seat_capacity - 1
                 await buses.findByIdAndUpdate(bus_id,{seat_capacity: new_seat}).exec()
-                res.json({res: "booking success",msg: 'Thanks for riding with us',data: new_booked})
+                res.json({res: "booking success",msg: 'Thanks for riding with us', data: new_booked})
             }
             else{
-                res.json({res: "insufficient", msg: "Your balance is insufficient"})
+                res.json({res: "insufficient", msg: "Your account balance is insufficient"})
             }
         }
         else{
